@@ -37,7 +37,7 @@ create table participaciones (
 
 
 insert into users (fullname, email, password, id_role) values
-('Carlos Pérez', 'carlos@example.com', '12345', 1),  -- Administrador
+('Carlos Pérez', 'carlos@example.com', '12345', 1),  
 ('Ana Gómez', 'ana@example.com', 'abcde', 2); 
 insert into roles (name) values
 ('Administrador'),
