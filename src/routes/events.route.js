@@ -48,6 +48,27 @@ const {titulo,descripcion,fecha,capacidad} =req.body
    
   });
 });
+
+
+route.delete("/:Id", (req, resp) => {
+  const sql = "delete from events where Id = ?"
+  const {Id} =req.params
+  connection.query(sql,[Id], (err, resultado) => {
+    if (err) {
+      resp.status(500).json({ message: "no se pudo eliminar " });
+    }
+    if (resultado.length===0) {
+        return resp.status(404).json({message:"no encontre el evento"})
+        
+    }
+    resp.json({message:"evento eliminado"})
+   
+  });
+});
+
+
+
+
   
   
 
