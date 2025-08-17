@@ -1,4 +1,4 @@
-import express from "express";
+import express, { json } from "express";
 
 import connection from "../sql/connection.js";
 
@@ -29,6 +29,26 @@ const {titulo,descripcion,fecha,capacidad} =req.body
     resp.status(201).json({message:"el evento fue registrado",Id:resultado.insertId  })
   });
 });
+
+route.put("/:Id", (req, resp) => {
+  const sql = "update events  set titulo = ?,descripcion =?,fecha=?,capacidad=?  where  Id=? "
+  const {Id} =req.params
+const {titulo,descripcion,fecha,capacidad} =req.body
+
+
+  connection.query(sql,[titulo,descripcion,fecha,capacidad,Id], (err, resultado) => {
+    if (err) {
+      resp.status(500).json({ message: "no se pudo actualizar " });
+    }
+    if (resultado.length===0) {
+        return resp.status(404),json({message:"no encontre el evento"})
+        
+    }
+    resp.json({message:"fue actualizado"})
+   
+  });
+});
+  
   
 
   
