@@ -18,3 +18,6 @@ connection.query("SHOW TABLES", (err, results) => {
   const tablas = results.map((fila) => Object.values(fila)[0]);
   console.log(tablas);
 });
+
+
+export default connection;
