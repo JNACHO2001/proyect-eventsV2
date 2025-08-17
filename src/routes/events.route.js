@@ -1,4 +1,4 @@
-import express, { json } from "express";
+import express from "express";
 
 import connection from "../sql/connection.js";
 
@@ -18,68 +18,59 @@ route.get("/", (req, resp) => {
 });
 
 route.post("/", (req, resp) => {
-  const sql = "insert into events(titulo,descripcion,fecha,capacidad)  values(?,?,?,?) "
-const {titulo,descripcion,fecha,capacidad} =req.body
+  const sql =
+    "insert into events(titulo,descripcion,fecha,capacidad)  values(?,?,?,?) ";
+  const { titulo, descripcion, fecha, capacidad } = req.body;
 
-
-  connection.query(sql,[titulo,descripcion,fecha,capacidad], (err, resultado) => {
-    if (err) {
-      resp.status(500).json({ message: "no se pudo registrar " });
+  connection.query(
+    sql,
+    [titulo, descripcion, fecha, capacidad],
+    (err, resultado) => {
+      if (err) {
+        return resp.status(500).json({ message: "no se pudo registrar " });
+      }
+      resp
+        .status(201)
+        .json({ message: "el evento fue registrado", Id: resultado.insertId });
     }
-    resp.status(201).json({message:"el evento fue registrado",Id:resultado.insertId  })
-  });
+  );
 });
 
 route.put("/:Id", (req, resp) => {
-  const sql = "update events  set titulo = ?,descripcion =?,fecha=?,capacidad=?  where  Id=? "
-  const {Id} =req.params
-const {titulo,descripcion,fecha,capacidad} =req.body
+  const sql =
+    "update events  set titulo = ?,descripcion =?,fecha=?,capacidad=?  where  Id=? ";
+  const { Id } = req.params;
+  const { titulo, descripcion, fecha, capacidad } = req.body;
 
-
-  connection.query(sql,[titulo,descripcion,fecha,capacidad,Id], (err, resultado) => {
-    if (err) {
-      resp.status(500).json({ message: "no se pudo actualizar " });
+  connection.query(
+    sql,
+    [titulo, descripcion, fecha, capacidad, Id],
+    (err, resultado) => {
+      if (err) {
+        return resp.status(500).json({ message: "no se pudo actualizar " });
+      }
+      if (resultado.length === 0) {
+        return resp.status(404), json({ message: "no encontre el evento" });
+      }
+      resp.json({ message: "fue actualizado" });
     }
-    if (resultado.length===0) {
-        return resp.status(404),json({message:"no encontre el evento"})
-        
-    }
-    resp.json({message:"fue actualizado"})
-   
-  });
+  );
 });
-
 
 route.delete("/:Id", (req, resp) => {
-  const sql = "delete from events where Id = ?"
-  const {Id} =req.params
-  connection.query(sql,[Id], (err, resultado) => {
+  const sql = "delete from events where Id = ?";
+  const { Id } = req.params;
+  connection.query(sql, [Id], (err, resultado) => {
     if (err) {
-      resp.status(500).json({ message: "no se pudo eliminar " });
+      return resp.status(500).json({ message: "no se pudo eliminar " });
     }
-    if (resultado.length===0) {
-        return resp.status(404).json({message:"no encontre el evento"})
-        
+    if (resultado.length === 0) {
+      return resp.status(404).json({ message: "no encontre el evento" });
     }
-    resp.json({message:"evento eliminado"})
-   
+    resp.json({ message: "evento eliminado" });
   });
 });
-
-
-
-
-  
-  
-
-  
-
-
-
-
-
 
 route.listen(3000, () => {
   console.log(`Servidor corriendo en http://localhost:3000`);
 });
-
