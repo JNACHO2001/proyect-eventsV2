@@ -31,3 +31,20 @@ create table participaciones (
   foreign key(id_user) references users(Id) on delete cascade on update cascade,
   foreign key(id_event) references events(Id) on delete cascade on update cascade
 );
+
+
+// ejemplos de insercion de datos 
+
+
+insert into users (fullname, email, password, id_role) values
+('Carlos Pérez', 'carlos@example.com', '12345', 1),  -- Administrador
+('Ana Gómez', 'ana@example.com', 'abcde', 2); 
+insert into roles (name) values
+('Administrador'),
+('Participante');
+
+INSERT INTO events (titulo, descripcion, fecha, capacidad) VALUES
+('Evento de Tecnología', 'Charla sobre nuevas tecnologías', '2025-08-20', 50),
+('Reunión de Proyecto', 'Discusión de avances del proyecto', '2025-08-21', 20),
+('Taller de Capacitación', 'Capacitación interna para empleados', '2025-08-22', 30);
+
