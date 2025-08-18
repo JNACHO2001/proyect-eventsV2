@@ -11,7 +11,7 @@ route.get("/", (req, resp) => {
 
   connection.query(sql, (err, resultado) => {
     if (err) {
-      resp.status(500).json({ message: "no se trarer nada " });
+      return resp.status(500).json({ message: "no se trarer nada " });
     }
     resp.json(resultado);
   });
