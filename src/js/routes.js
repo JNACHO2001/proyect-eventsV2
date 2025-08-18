@@ -25,3 +25,9 @@ const routes = {
 
     
 }
+
+export function redirecto(path) {
+    window.history.replaceState({},"",`${path}`)
+    return renderRoute();
+    
+}
