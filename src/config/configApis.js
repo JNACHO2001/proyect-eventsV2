@@ -1,12 +1,17 @@
 const API_URL = "http://localhost:3000/api/users"; 
 
-
-export async function registerUser(userData) {
+export async function registerUser(newUser) {
   const resp = await fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(userData),
+    body: JSON.stringify(newUser),
   });
-  if (!resp.ok) throw new Error("Error al registrar usuario");
-  return resp.json();
+
+  const data = await resp.json();
+
+  if (!resp.ok) {
+    throw new Error(data.message); // usa lo que mande la API
+  }
+
+  return data;
 }

@@ -1,5 +1,5 @@
 import express from "express";
-import bcrypt, { hash } from "bcrypt";
+import bcrypt from "bcrypt";
 import connection from "../sql/connection.js";
 
 const route = express.Router();
@@ -18,26 +18,43 @@ route.get("/", (req, resp) => {
 });
 
 route.post("/", (req, resp) => {
-  const sql =
-    "insert into users (fullname,email,password,id_role) values (?,?,?,?)  ";
+  const sql = "insert into users (fullname,email,password,id_role) values (?,?,?,?)";
+  const sqlEmailCheck = "select * from users where email = ?";
+
   const { fullname, email, password, id_role } = req.body;
-  bcrypt.hash(password, 10, (err, hashedPassword) => {
+
+  connection.query(sqlEmailCheck, [email], (err, isEmail) => {
     if (err) {
-      return resp.status(500).json({ message: "no se pudo encriptar" });
+      return resp
+        .status(500)
+        .json({ message: "Error al verificar el correo" });
     }
 
-    connection.query(
-      sql,
-      [fullname, email, hashedPassword, id_role],
-      (err, resultado) => {
-        if (err) {
-          return resp
-            .status(500)
-            .json({ message: "no se pudo  insertar el usuario " });
-        }
-        resp.status(201).json({ message: "usuario creado " });
+    if (isEmail.length > 0) {
+      return resp
+        .status(400)
+        .json({ message: "El correo ya está registrado" });
+    }
+
+    bcrypt.hash(password, 10, (err, hashedPassword) => {
+      if (err) {
+        return resp.status(500).json({ message: "no se pudo encriptar" });
       }
-    );
+
+      connection.query(
+        sql,
+        [fullname, email, hashedPassword, id_role],
+        (err, resultado) => {
+          if (err) {
+            return resp
+              .status(500)
+              .json({ message: "no se pudo insertar el usuario " });
+          }
+          resp.status(201).json({ message: "usuario creado " });
+        }
+      );
+    });
   });
 });
+
 export default route;

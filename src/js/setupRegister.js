@@ -23,11 +23,10 @@ export function setupRegister() {
 
     try {
       const resp = await registerUser(newUser);
-
       alert(resp.message);
+      form.reset();
     } catch (err) {
-      console.error(err);
-      alert("Hubo un problema al registrar el usuario");
+      alert(err.message);
     }
   });
 }
