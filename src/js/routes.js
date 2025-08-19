@@ -3,6 +3,12 @@ const routes = {
     path: "/src/view/login.html"
   
   },
+  "/register":{
+    path: "/src/view/register.html"
+
+  },
+
+
   "/notfound":{
     path:"src/view/notfound.html"
   }
