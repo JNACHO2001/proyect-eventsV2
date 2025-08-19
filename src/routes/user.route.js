@@ -1,5 +1,5 @@
 import express from "express";
-
+import bcrypt, { hash } from "bcrypt";
 import connection from "../sql/connection.js";
 
 const route = express.Router();
@@ -21,16 +21,23 @@ route.post("/", (req, resp) => {
   const sql =
     "insert into users (fullname,email,password,id_role) values (?,?,?,?)  ";
   const { fullname, email, password, id_role } = req.body;
-
-  connection.query(
-    sql,[fullname, email, password, id_role],(err, resultado) => {
-      if (err) {
-        return resp
-          .status(500)
-          .json({ message: "no se pudo  insertar el usuario " });
-      }
-      resp.status(201).json({ message: "usuario creado " });
+  bcrypt.hash(password, 10, (err, hashedPassword) => {
+    if (err) {
+      return resp.status(500).json({ message: "no se pudo encriptar" });
     }
-  );
+
+    connection.query(
+      sql,
+      [fullname, email, hashedPassword, id_role],
+      (err, resultado) => {
+        if (err) {
+          return resp
+            .status(500)
+            .json({ message: "no se pudo  insertar el usuario " });
+        }
+        resp.status(201).json({ message: "usuario creado " });
+      }
+    );
+  });
 });
 export default route;
