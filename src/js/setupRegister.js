@@ -1,42 +1,33 @@
-
+import { registerUser } from "../config/configApis";
 
 export function setupRegister() {
+  const registerForm = document.querySelector(".register-form");
 
-    const registerForm = document.querySelector(".register-form");
+  registerForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-registerForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
 
-  const fullname = document.getElementById("fullName").value;
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-  const confirmPassword = document.getElementById("confirmPassword").value;
-
-  if (password !== confirmPassword) {
-    alert("Las contraseñas no coinciden");
-    return;
-  }
-
-  try {
-    const resp = await fetch("http://localhost:3000/api/users", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fullname, email, password,id_role:2 })
-    });
-
-    if (!resp.ok) {
-      throw new Error("Error al registrar usuario");
+    if (password !== confirmPassword) {
+      alert("Las contraseñas no coinciden");
+      return;
     }
 
-    const data = await resp.json();
-    alert(data.message)
+    const newUser = {
+      fullname: document.getElementById("fullName").value,
+      email: document.getElementById("email").value,
+      password: password,
+      id_role: 2,
+    };
 
+    try {
+      const resp = await registerUser(newUser);
 
-  } catch (err) {
-    console.error(err);
-    alert("Hubo un problema al registrar el usuario");
-  }
-});
-
-    
+      alert(resp.message);
+    } catch (err) {
+      console.error(err);
+      alert("Hubo un problema al registrar el usuario");
+    }
+  });
 }

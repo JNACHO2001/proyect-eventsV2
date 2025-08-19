@@ -4,8 +4,6 @@ import connection from "../sql/connection.js";
 
 const route = express.Router();
 
-
-
 route.get("/", (req, resp) => {
   const sql = "select * from users";
 
@@ -33,9 +31,7 @@ route.post("/", (req, resp) => {
           .status(500)
           .json({ message: "no se pudo  insertar el usuario " });
       }
-      resp
-        .status(201)
-        .json({ message: "usuario creado " });
+      resp.status(201).json({ message: "usuario creado " });
     }
   );
 });
