@@ -1,6 +1,9 @@
+import { setupLogin } from "./setupLogin";
+
 const routes = {
   "/": {
-    path: "/src/view/login.html"
+    path: "/src/view/login.html",
+    setup:setupLogin
   
   },
   "/register":{
@@ -23,6 +26,11 @@ const routes = {
         const file = await fetch(route.path)
         const content = await file.text()
         app.innerHTML=content
+
+        if (route.setup) {
+          route.setup();
+          
+        }
         
     } catch (error) {
         console.log("no encontre la ruta ",error)
