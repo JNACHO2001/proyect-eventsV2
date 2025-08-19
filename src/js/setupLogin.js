@@ -19,8 +19,12 @@ export function setupLogin() {
 
         };
         try {
-            const data = await loginUser(credentials)
-            alert(data.message)
+           const  data =await loginUser(credentials)
+            alert(data.message);
+            localStorage.setItem("current",JSON.stringify(data.user))
+
+            redirecto("/dashboard")
+            
             
             
         } catch (error) {

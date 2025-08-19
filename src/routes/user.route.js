@@ -18,22 +18,19 @@ route.get("/", (req, resp) => {
 });
 
 route.post("/", (req, resp) => {
-  const sql = "insert into users (fullname,email,password,id_role) values (?,?,?,?)";
+  const sql =
+    "insert into users (fullname,email,password,id_role) values (?,?,?,?)";
   const sqlEmailCheck = "select * from users where email = ?";
 
   const { fullname, email, password, id_role } = req.body;
 
   connection.query(sqlEmailCheck, [email], (err, isEmail) => {
     if (err) {
-      return resp
-        .status(500)
-        .json({ message: "Error al verificar el correo" });
+      return resp.status(500).json({ message: "Error al verificar el correo" });
     }
 
     if (isEmail.length > 0) {
-      return resp
-        .status(400)
-        .json({ message: "El correo ya está registrado" });
+      return resp.status(400).json({ message: "El correo ya está registrado" });
     }
 
     bcrypt.hash(password, 10, (err, hashedPassword) => {
@@ -57,43 +54,39 @@ route.post("/", (req, resp) => {
   });
 });
 
-
-
-route.post("/login",(req,resp)=>{
-  const {email,password} = req.body
-  const sql ="select * from users where  email = ? "
-  connection.query(sql,[email],(err,resultado)=>{
+route.post("/login", (req, resp) => {
+  const { email, password } = req.body;
+  const sql = "select * from users where  email = ? ";
+  connection.query(sql, [email], (err, resultado) => {
     if (err) {
-      return resp.status(500).json({message:"error en el servidor"})
+      return resp.status(500).json({ message: "error en el servidor" });
     }
-    if (resultado===0) {
-      return resp.status(401).json({message:"usuario no encontrado"})
+    if (resultado === 0) {
+      return resp.status(401).json({ message: "usuario no encontrado" });
     }
-    const user = resultado[0]
-    console.log(user)
+    const user = resultado[0];
+    console.log(user);
 
-    bcrypt.compare(password,user.password,(err,isMatch)=>{
+    bcrypt.compare(password, user.password, (err, isMatch) => {
       if (err) {
-        return resp.status(500).json({message:"error al validar"})
+        return resp.status(500).json({ message: "error al validar" });
       }
 
       if (!isMatch) {
-        return resp.status(401).json({message:"constraseña incorrecta"})
-        
+        return resp.status(401).json({ message: "constraseña incorrecta" });
       }
-    
-      resp.json({ message: "Login exitoso"+user.fullname})
 
-
-
-    } )
-
-
-
-
-  })
-
-
-})
+      resp.json({
+        message: "Login exitoso",
+        user: {
+          id: user.Id,
+          fullname: user.fullname,
+          email: user.email,
+          role: user.id_role,
+        },
+      });
+    });
+  });
+});
 
 export default route;

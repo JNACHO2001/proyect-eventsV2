@@ -12,6 +12,10 @@ const routes = {
     setup:setupRegister
 
   },
+  "/dashboard":{
+    path:"/src/view/dashboard.html"
+
+  },
 
 
   "/notfound":{
