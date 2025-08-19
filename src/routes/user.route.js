@@ -2,9 +2,9 @@ import express from "express";
 
 import connection from "../sql/connection.js";
 
-const route = express();
+const route = express.Router();
 
-route.use(express.json());
+
 
 route.get("/", (req, resp) => {
   const sql = "select * from users";
