@@ -153,6 +153,7 @@ input[type="password"]:focus {
 .signup-link {
   color: #718096;
   font-size: 14px;
+  cursor: pointer;
 }
 
 .signup-link a {

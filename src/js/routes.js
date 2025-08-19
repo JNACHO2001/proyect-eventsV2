@@ -1,4 +1,5 @@
 import { setupLogin } from "./setupLogin";
+import { setupRegister } from "./setupRegister";
 
 const routes = {
   "/": {
@@ -7,7 +8,8 @@ const routes = {
   
   },
   "/register":{
-    path: "/src/view/register.html"
+    path: "/src/view/register.html",
+    setup:setupRegister
 
   },
 
