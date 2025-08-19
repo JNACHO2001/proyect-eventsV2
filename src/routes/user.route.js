@@ -23,9 +23,7 @@ route.post("/", (req, resp) => {
   const { fullname, email, password, id_role } = req.body;
 
   connection.query(
-    sql,
-    [fullname, email, password, id_role],
-    (err, resultado) => {
+    sql,[fullname, email, password, id_role],(err, resultado) => {
       if (err) {
         return resp
           .status(500)

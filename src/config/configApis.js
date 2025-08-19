@@ -1,6 +1,6 @@
-const API_URL = "http://localhost:3000/api/users"; // tu endpoint
+const API_URL = "http://localhost:3000/api/users"; 
 
-// Registrar usuario
+
 export async function registerUser(userData) {
   const resp = await fetch(API_URL, {
     method: "POST",
