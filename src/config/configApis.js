@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/api/users"; 
+const API_URL = "http://localhost:3000/api/users";
 
 export async function registerUser(newUser) {
   const resp = await fetch(API_URL, {
@@ -10,7 +10,7 @@ export async function registerUser(newUser) {
   const data = await resp.json();
 
   if (!resp.ok) {
-    throw new Error(data.message); // usa lo que mande la API
+    throw new Error(data.message);
   }
 
   return data;
