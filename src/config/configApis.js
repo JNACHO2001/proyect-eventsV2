@@ -15,3 +15,15 @@ export async function registerUser(newUser) {
 
   return data;
 }
+
+
+export async function loginUser(credentials) {
+  const resp = await fetch(`${API_URL}/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(credentials),
+  });
+
+  if (!resp.ok) throw new Error("Credenciales incorrectas  ");
+  return resp.json();
+}

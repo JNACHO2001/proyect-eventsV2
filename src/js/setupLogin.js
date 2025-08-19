@@ -1,3 +1,4 @@
+import { loginUser } from "../config/configApis"
 import { redirecto } from "./routes"
 
 export function setupLogin() {
@@ -6,8 +7,32 @@ export function setupLogin() {
     btnRegister.addEventListener("click",(e)=> {
         e.preventDefault()
     redirecto("/register")
-
-        
     })    
+
+    const form = document.getElementById("form-login")
+    form.addEventListener("submit", async (e)=>{
+        e.preventDefault()
+
+        const credentials = {
+            email:document.getElementById("email").value,
+            password:document.getElementById("password").value
+
+        };
+        try {
+            const data = await loginUser(credentials)
+            alert(data.message)
+            
+            
+        } catch (error) {
+            alert(error.message)
+            
+        }
+
+
+    } )
+
+
+
+
     
 }

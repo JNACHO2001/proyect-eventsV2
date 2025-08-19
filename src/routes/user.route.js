@@ -57,4 +57,43 @@ route.post("/", (req, resp) => {
   });
 });
 
+
+
+route.post("/login",(req,resp)=>{
+  const {email,password} = req.body
+  const sql ="select * from users where  email = ? "
+  connection.query(sql,[email],(err,resultado)=>{
+    if (err) {
+      return resp.status(500).json({message:"error en el servidor"})
+    }
+    if (resultado===0) {
+      return resp.status(401).json({message:"usuario no encontrado"})
+    }
+    const user = resultado[0]
+    console.log(user)
+
+    bcrypt.compare(password,user.password,(err,isMatch)=>{
+      if (err) {
+        return resp.status(500).json({message:"error al validar"})
+      }
+
+      if (!isMatch) {
+        return resp.status(401).json({message:"constraseña incorrecta"})
+        
+      }
+    
+      resp.json({ message: "Login exitoso"+user.fullname})
+
+
+
+    } )
+
+
+
+
+  })
+
+
+})
+
 export default route;

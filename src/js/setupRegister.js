@@ -1,6 +1,12 @@
 import { registerUser } from "../config/configApis";
+import { redirecto } from "./routes";
 
 export function setupRegister() {
+   const btnLogin=document.querySelector(".ir_login")
+      btnLogin.addEventListener("click",(e)=> {
+          e.preventDefault()
+      redirecto("/")
+      })    
   const registerForm = document.querySelector(".register-form");
 
   registerForm.addEventListener("submit", async (e) => {
