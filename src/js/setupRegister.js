@@ -29,7 +29,7 @@ registerForm.addEventListener("submit", async (e) => {
     }
 
     const data = await resp.json();
-    console.log("Usuario registrado:", data);
+    alert(data.message)
 
 
   } catch (err) {

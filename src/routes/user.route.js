@@ -35,7 +35,7 @@ route.post("/", (req, resp) => {
       }
       resp
         .status(201)
-        .json({ message: "usuario creado   ", Id: resultado.insertId });
+        .json({ message: "usuario creado " });
     }
   );
 });
