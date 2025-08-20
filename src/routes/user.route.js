@@ -45,7 +45,7 @@ route.post("/", (req, resp) => {
           if (err) {
             return resp
               .status(500)
-              .json({ message: "no se pudo insertar el usuario " });
+              .json({ message: "no se pudo insertar el usuario "+err });
           }
           resp.status(201).json({ message: "usuario creado " });
         }

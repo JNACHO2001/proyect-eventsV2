@@ -1,29 +1,14 @@
 import { redirecto } from "./routes";
 
 export function setupDashboard() {
-    setupLogoutButton()
-    
+  setupOutButton();
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-function setupLogoutButton() {
-    const exit =document.querySelector(".logout-btn") 
-    exit.addEventListener("click",(e)=>{
-        e.preventDefault()
-        localStorage.removeItem("current");
-        redirecto("/")
-        
-
-    })
+function setupOutButton() {
+  const logout = document.querySelector(".logout-btn");
+ logout.addEventListener("click", (e) => {
+    e.preventDefault();
+    localStorage.removeItem("current");
+    redirecto("/");
+  });
 }
