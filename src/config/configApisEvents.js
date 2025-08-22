@@ -18,6 +18,7 @@ export async function createEvent(newEvents) {
     }
 
     const data = await resp.json()
+    
    
     return data
   } catch (error) {
