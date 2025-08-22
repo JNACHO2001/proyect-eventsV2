@@ -10,7 +10,7 @@ route.get("/", (req, resp) => {
 
   connection.query(sql, (err, resultado) => {
     if (err) {
-      return resp.status(500).json({ message: "no se trarer nada " });
+      return resp.status(500).json({ message: "no traje nada " });
     }
     resp.json(resultado);
   });
@@ -20,6 +20,7 @@ route.post("/", (req, resp) => {
   const sql =
     "insert into events(titulo,descripcion,fecha,capacidad)  values(?,?,?,?) ";
   const { titulo, descripcion, fecha, capacidad } = req.body;
+     console.log("Datos recibidos:", req.body);
 
   connection.query(
     sql,
@@ -40,6 +41,7 @@ route.put("/:Id", (req, resp) => {
     "update events  set titulo = ?,descripcion =?,fecha=?,capacidad=?  where  Id=? ";
   const { Id } = req.params;
   const { titulo, descripcion, fecha, capacidad } = req.body;
+
 
   connection.query(
     sql,
