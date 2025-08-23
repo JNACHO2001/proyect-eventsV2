@@ -1,10 +1,12 @@
 import { setupForm } from "../../public/sweetAlert2/setupForm";
+import { getEvents } from "../config/configApisEvents";
 import { redirecto } from "./routes";
 
 export function setupDashboard() {
   setupOutButton();
   infoUserSlide();
   loadform();
+  loadEventsView()
 }
 
 function infoUserSlide() {
@@ -12,7 +14,7 @@ function infoUserSlide() {
   const user = JSON.parse(localStorage.getItem("current"));
   const firsLetter = user.fullname[0].toUpperCase();
 
-  contentUserInfo.innerHTML = ` <p class="user-avatar">${firsLetter}</p>
+  contentUserInfo.innerHTML = `<p class="user-avatar">${firsLetter}</p>
         <h2 class="user-name">${user.fullname}</h2>
         <p class="user-email">${user.email}</p>  `;
 }
@@ -24,6 +26,39 @@ function setupOutButton() {
     localStorage.removeItem("current");
     redirecto("/");
   });
+}
+
+async function loadEventsView() {
+  const contentEvets = document.querySelector(".event-card");
+  try {
+    const data = await getEvents();
+    contentEvets.innerHTML="";
+    if (!data || data.length===0  ) {
+      contentEvets.innerHTML=  `<h3>No hay ningún registro</h3>`
+      return
+    }
+    data.forEach((events) => {
+      contentEvets.innerHTML += renderEventsRow(events)
+      
+    });
+
+
+
+
+  } catch (error) {
+     console.error("Error al cargar eventos:", error);
+
+
+  }
+}
+function renderEventsRow(events) {
+  return `  <h3 class="event-title">${events.titulo}</h3>
+          <p class="event-date">${events.fecha}</p>
+          <p class="event-description">${events.descripcion}</p>
+          <p class="event-capacity">${events.capacidad}</p>
+          <div class="event-actions">
+            <button class="edit-btn" data-id="${events.id}">Editar</button>
+            <button class="delete-btn"  data-id="${events.id}" >Eliminar</button> `;
 }
 
 function loadform() {

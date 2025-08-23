@@ -27,3 +27,8 @@ export async function createEvent(newEvents) {
     throw error;
   }
 }
+export async function getEvents() {
+
+  const resp = await fetch(API_URL)
+  return resp.json()
+}
