@@ -6,7 +6,7 @@ export function setupDashboard() {
   setupOutButton();
   infoUserSlide();
   loadform();
-  loadEventsView()
+  loadEventsView();
 }
 
 function infoUserSlide() {
@@ -29,36 +29,34 @@ function setupOutButton() {
 }
 
 async function loadEventsView() {
-  const contentEvets = document.querySelector(".event-card");
+  const contentEvets = document.querySelector(".events-grid");
   try {
     const data = await getEvents();
-    contentEvets.innerHTML="";
-    if (!data || data.length===0  ) {
-      contentEvets.innerHTML=  `<h3>No hay ningún registro</h3>`
-      return
+    contentEvets.innerHTML = "";
+    if (!data || data.length === 0) {
+      contentEvets.innerHTML = `<h3>No hay ningún registro</h3>`;
+      return;
     }
     data.forEach((events) => {
-      contentEvets.innerHTML += renderEventsRow(events)
-      
+      contentEvets.innerHTML += renderEventsRow(events);
     });
-
-
-
-
   } catch (error) {
-     console.error("Error al cargar eventos:", error);
-
-
+    console.error("Error al cargar eventos:", error);
   }
 }
 function renderEventsRow(events) {
-  return `  <h3 class="event-title">${events.titulo}</h3>
+  return ` 
+    <div class="event-card">
+      <h3 class="event-title">${events.titulo}</h3>
           <p class="event-date">${events.fecha}</p>
           <p class="event-description">${events.descripcion}</p>
           <p class="event-capacity">${events.capacidad}</p>
           <div class="event-actions">
             <button class="edit-btn" data-id="${events.id}">Editar</button>
-            <button class="delete-btn"  data-id="${events.id}" >Eliminar</button> `;
+            <button class="delete-btn"  data-id="${events.id}" >Eliminar</button>
+        
+          </div>
+ `;
 }
 
 function loadform() {
