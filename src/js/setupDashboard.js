@@ -1,5 +1,5 @@
 import { setupForm } from "../../public/sweetAlert2/setupForm";
-import { getEvents } from "../config/configApisEvents";
+import { deleteEvents, getEvents } from "../config/configApisEvents";
 import { redirecto } from "./routes";
 
 export function setupDashboard() {
@@ -28,7 +28,7 @@ function setupOutButton() {
   });
 }
 
-async function loadEventsView() {
+export async function loadEventsView() {
   const contentEvets = document.querySelector(".events-grid");
   try {
     const data = await getEvents();
@@ -40,6 +40,8 @@ async function loadEventsView() {
     data.forEach((events) => {
       contentEvets.innerHTML += renderEventsRow(events);
     });
+
+    contentEvets.addEventListener("click", handleEventActions);
   } catch (error) {
     console.error("Error al cargar eventos:", error);
   }
@@ -52,11 +54,25 @@ function renderEventsRow(events) {
           <p class="event-description">${events.descripcion}</p>
           <p class="event-capacity">${events.capacidad}</p>
           <div class="event-actions">
-            <button class="edit-btn" data-id="${events.id}">Editar</button>
-            <button class="delete-btn"  data-id="${events.id}" >Eliminar</button>
+            <button class="edit-btn" data-id="${events.Id}">Editar</button>
+            <button class="delete-btn"  data-id="${events.Id}" >Eliminar</button>
         
           </div>
  `;
+}
+
+async function handleEventActions(e) {
+  const target = e.target;
+
+  if (target.classList.contains("edit-btn")) {
+    const id = target.dataset.id;
+  }
+
+  if (target.classList.contains("delete-btn")) {
+    const id = target.dataset.id;
+    await deleteEvents(id);
+    loadEventsView();
+  }
 }
 
 function loadform() {

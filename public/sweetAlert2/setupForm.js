@@ -1,5 +1,6 @@
 import { createEvent } from "../../src/config/configApisEvents";
 import Swal from "sweetalert2";
+import { loadEventsView } from "../../src/js/setupDashboard";
 export async function setupForm() {
   Swal.fire({
     title: "Registrar eventos",
@@ -43,6 +44,7 @@ export async function setupForm() {
       try {
         const respuesta = await createEvent(results.value);
         Swal.fire("exito", respuesta.message, "success");
+        loadEventsView();
       } catch (error) {
         Swal.fire("Error", "No se pudo registrar el evento", "error");
       }
