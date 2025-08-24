@@ -54,7 +54,7 @@ function renderEventsRow(events) {
       <h3 class="event-title">${events.titulo}</h3>
           <p class="event-date">${configData(events.fecha)}</p>
           <p class="event-description">${events.descripcion}</p>
-          <p class="event-capacity">${events.capacidad}</p>
+          <p class="event-capacity">CapMax:${events.capacidad}</p>
           <div class="event-actions">
             <button class="edit-btn" data-id="${events.Id}">Editar</button>
             <button class="delete-btn"  data-id="${
