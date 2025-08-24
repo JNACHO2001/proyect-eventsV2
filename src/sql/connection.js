@@ -1,10 +1,12 @@
 import mysql from "mysql2";
+import dotenv from "dotenv";
+dotenv.config();
 
 const connection = mysql.createPool({
-  host: "mysql-miapp1.alwaysdata.net",
-  user: "miapp1_events",
-  password: "R@@t2025",
-  database: "miapp1_events",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
 });
 
 connection.query("SHOW TABLES", (err, results) => {
@@ -18,6 +20,5 @@ connection.query("SHOW TABLES", (err, results) => {
   const tablas = results.map((fila) => Object.values(fila)[0]);
   console.log(tablas);
 });
-
 
 export default connection;
