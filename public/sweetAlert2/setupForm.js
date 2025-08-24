@@ -22,6 +22,18 @@ export async function setupForm() {
         fecha: document.getElementById("date").value,
         capacidad: document.getElementById("capacity").value,
       };
+      const hoy = new Date();
+      hoy.setHours(0, 0, 0);
+      const dateEvents = new Date(newEvents.fecha);
+      if (dateEvents < hoy) {
+        Swal.fire({
+          icon: "error",
+          title: "Fecha inválida",
+          text: "No puedes crear un evento en una fecha pasada.",
+        });
+
+        return false;
+      }
 
       if (
         !newEvents.titulo ||
@@ -33,7 +45,7 @@ export async function setupForm() {
         return false;
       }
 
-      if (newEvents.capacidad < 0) {
+      if (newEvents.capacidad <= 0) {
         Swal.showValidationMessage(" Ingrese una capacidad valida");
         return false;
       }
