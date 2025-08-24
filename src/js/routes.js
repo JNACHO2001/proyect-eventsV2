@@ -1,3 +1,4 @@
+import { isAuthenticated } from "../config/guardian";
 import { setupDashboard } from "./setupDashboard";
 import { setupLogin } from "./setupLogin";
 import { setupRegister } from "./setupRegister";
@@ -14,6 +15,7 @@ const routes = {
   "/dashboard": {
     path: "/src/view/dashboard.html",
     setup: setupDashboard,
+    guard:isAuthenticated
   },
 
   "/notfound": {
@@ -25,6 +27,16 @@ export async function renderRoute() {
   const app = document.getElementById("app");
   const path = window.location.pathname;
   const route = routes[path] || routes["/notfound"];
+
+  if (route.guard && !route.guard() ) {
+       console.warn("Acceso denegado");
+       if (path ==="/dashboard"  && isAuthenticated()) {
+        return redirecto ("/dashboardVisit")
+        
+       }
+       return redirecto("/")
+    
+  }
 
   try {
     const file = await fetch(route.path);
