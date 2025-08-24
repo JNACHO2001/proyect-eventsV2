@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 import { configData } from "../../public/sweetAlert2/config";
-import { getEvents } from "../config/configApisEvents";
+import { getEvents, getOneEvents } from "../config/configApisEvents";
 import { redirecto } from "./routes";
 
 export function setupDashboardVisit() {
@@ -54,7 +54,9 @@ function renderEventsRow(events) {
           <p class="event-description">${events.descripcion}</p>
           <p class="event-capacity">CapMax:${events.capacidad}</p>
           <div class="event-actions">
+            <button class="edit-btn" data-id="${events.Id}">Ingresar</button>
            
+        
           </div>
  `;
 }
@@ -66,29 +68,9 @@ async function handleEventActions(e) {
     if (target.classList.contains("edit-btn")) {
       const id = target.dataset.id;
       const evento = await getOneEvents(id);
-      setupForm(evento);
-    }
-
-    if (target.classList.contains("delete-btn")) {
-      const id = target.dataset.id;
-      const respuesta = await deleteEvents(id);
-      Swal.fire({
-        title: "¡Eliminado!",
-        text: respuesta.message,
-        icon: "success",
-        confirmButtonText: "Aceptar",
-      });
-
-      loadEventsView();
+      console.log(evento.Id);
     }
   } catch (error) {
     console.error("Hay un nuevo error", error);
   }
-}
-
-function loadform() {
-  const form = document.querySelector(".create-btn");
-  form.addEventListener("click", async () => {
-    setupForm();
-  });
 }
