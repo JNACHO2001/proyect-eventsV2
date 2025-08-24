@@ -7,6 +7,7 @@ export function setupDashboardVisit() {
   setupOutButton();
   infoUserSlide();
   loadEventsView();
+  
 }
 
 function infoUserSlide() {

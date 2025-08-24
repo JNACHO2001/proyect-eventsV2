@@ -1,4 +1,5 @@
-<body>
+<div class="content-visit">
+  <body>
   <div class="dashboard">
     <!-- Sidebar izquierdo - Información del usuario -->
     <aside class="sidebar">
@@ -25,13 +26,62 @@
     <main class="main-content">
       <header class="header">
         <h1 class="page-title">Mis Eventos</h1>
-        <button class="create-btn">Crear Evento</button>
       </header>
+      <div class="tabs">
+                <button class="tab active">Mis Eventos</button>
+                <button class="tab">Mis Participaciones</button>
+            </div>
 
       <!-- Lista de eventos -->
       <div class="events-grid">
       
         </div>
+          <div id="participations" class="tab-content">
+                <div class="participations-list">
+                    <div class="participation-card">
+                        <div class="participation-info">
+                            <h3>Seminario de Marketing Digital</h3>
+                            <div class="participation-date">10 de Marzo, 2024</div>
+                        </div>
+                        <div class="participation-status status-confirmed">Confirmado</div>
+                    </div>
+
+                    <div class="participation-card">
+                        <div class="participation-info">
+                            <h3>Curso de React Avanzado</h3>
+                            <div class="participation-date">18 de Marzo, 2024</div>
+                        </div>
+                        <div class="participation-status status-pending">Pendiente</div>
+                    </div>
+
+                    <div class="participation-card">
+                        <div class="participation-info">
+                            <h3>Meetup de Desarrolladores</h3>
+                            <div class="participation-date">25 de Marzo, 2024</div>
+                        </div>
+                        <div class="participation-status status-confirmed">Confirmado</div>
+                    </div>
+
+                    <div class="participation-card">
+                        <div class="participation-info">
+                            <h3>Conferencia de IA</h3>
+                            <div class="participation-date">2 de Abril, 2024</div>
+                        </div>
+                        <div class="participation-status status-pending">Pendiente</div>
+                    </div>
+
+                    <div class="participation-card">
+                        <div class="participation-info">
+                            <h3>Workshop de Node.js</h3>
+                            <div class="participation-date">8 de Abril, 2024</div>
+                        </div>
+                        <div class="participation-status status-confirmed">Confirmado</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
         
         
@@ -39,3 +89,6 @@
     </main>
   </div>
 </body>
+
+
+</div>
