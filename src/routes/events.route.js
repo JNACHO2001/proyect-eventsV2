@@ -16,6 +16,24 @@ route.get("/", (req, resp) => {
   });
 });
 
+route.get("/:id", (req, resp) => {
+  const { id } = req.params;
+  const sql = "SELECT * FROM events WHERE id = ?";
+
+  connection.query(sql, [id], (err, resultado) => {
+    if (err) {
+      return resp.status(500).json({ message: "Error en la base de datos" });
+    }
+
+    if (resultado.length === 0) {
+      return resp.status(404).json({ message: "Evento no encontrado" });
+    }
+
+    resp.json(resultado[0]); 
+  });
+});
+
+
 route.post("/", (req, resp) => {
   const sql =
     "insert into events(titulo,descripcion,fecha,capacidad)  values(?,?,?,?) ";

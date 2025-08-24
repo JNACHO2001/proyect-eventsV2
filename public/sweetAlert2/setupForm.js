@@ -1,9 +1,9 @@
-import { createEvent } from "../../src/config/configApisEvents";
+import { createEvent, putEvents } from "../../src/config/configApisEvents";
 import Swal from "sweetalert2";
 import { loadEventsView } from "../../src/js/setupDashboard";
-export async function setupForm() {
+export async function setupForm(eventToEdit=null) {
   Swal.fire({
-    title: "Registrar eventos",
+    title: eventToEdit? "editar evento":"registrar evento",
     html: `
       <form id="formEvents">
         <input type="text" id="title" class="swal2-input" placeholder="Título">
@@ -14,7 +14,7 @@ export async function setupForm() {
     `,
     focusConfirm: false,
     showCancelButton: true,
-    confirmButtonText: "Registrar",
+    confirmButtonText: eventToEdit? "actualizar":"registrar",
     preConfirm: () => {
       const newEvents = {
         titulo: document.getElementById("title").value,
@@ -54,9 +54,19 @@ export async function setupForm() {
   }).then(async (results) => {
     if (results.isConfirmed) {
       try {
-        const respuesta = await createEvent(results.value);
+        let respuesta;
+        if (eventToEdit) {
+          respuesta = await putEvents(eventToEdit.Id,results.value)
+        } else{
+         respuesta = await createEvent(results.value);
         Swal.fire("exito", respuesta.message, "success");
         loadEventsView();
+
+        }
+
+
+
+
       } catch (error) {
         Swal.fire("Error", "No se pudo registrar el evento", "error");
       }

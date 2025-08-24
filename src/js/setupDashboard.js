@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 import { configData } from "../../public/sweetAlert2/config";
 import { setupForm } from "../../public/sweetAlert2/setupForm";
-import { deleteEvents, getEvents } from "../config/configApisEvents";
+import { deleteEvents, getEvents, getOneEvents } from "../config/configApisEvents";
 import { redirecto } from "./routes";
 
 export function setupDashboard() {
@@ -71,6 +71,9 @@ async function handleEventActions(e) {
 
     if (target.classList.contains("edit-btn")) {
       const id = target.dataset.id;
+      const evento = await getOneEvents(id)
+      setupForm(evento)
+      
     }
 
     if (target.classList.contains("delete-btn")) {
