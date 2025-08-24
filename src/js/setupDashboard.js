@@ -1,3 +1,4 @@
+import { configData } from "../../public/sweetAlert2/config";
 import { setupForm } from "../../public/sweetAlert2/setupForm";
 import { deleteEvents, getEvents } from "../config/configApisEvents";
 import { redirecto } from "./routes";
@@ -50,12 +51,14 @@ function renderEventsRow(events) {
   return ` 
     <div class="event-card">
       <h3 class="event-title">${events.titulo}</h3>
-          <p class="event-date">${events.fecha}</p>
+          <p class="event-date">${configData(events.fecha)}</p>
           <p class="event-description">${events.descripcion}</p>
           <p class="event-capacity">${events.capacidad}</p>
           <div class="event-actions">
             <button class="edit-btn" data-id="${events.Id}">Editar</button>
-            <button class="delete-btn"  data-id="${events.Id}" >Eliminar</button>
+            <button class="delete-btn"  data-id="${
+              events.Id
+            }" >Eliminar</button>
         
           </div>
  `;
