@@ -48,3 +48,5 @@ INSERT INTO events (titulo, descripcion, fecha, capacidad) VALUES
 ('Reunión de Proyecto', 'Discusión de avances del proyecto', '2025-08-21', 20),
 ('Taller de Capacitación', 'Capacitación interna para empleados', '2025-08-22', 30);
 
+update users set id_role =1 where email="joseesapel@gmail.com"
+;
