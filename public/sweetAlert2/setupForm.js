@@ -23,7 +23,7 @@ export async function setupForm(eventToEdit = null) {
     focusConfirm: false,
     showCancelButton: true,
     confirmButtonText: eventToEdit ? "actualizar" : "registrar",
-    confirmButtonColor: eventToEdit ? "#28a745" : "#3085d6", 
+    confirmButtonColor: eventToEdit ? "#28a745" : "#3085d6", // Verde si es actualizar, azul si es registrar
     cancelButtonColor: "#d33",
     preConfirm: () => {
       const newEvents = {

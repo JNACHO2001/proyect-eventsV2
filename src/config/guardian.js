@@ -7,5 +7,5 @@ export function isAuthenticated() {
 }
 export function isAdmin() {
   const user = getUser();
-  return user && user.id_role === 1;
+  return user && user.role === 1;
 }
