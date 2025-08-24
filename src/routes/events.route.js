@@ -18,7 +18,8 @@ route.get("/", (req, resp) => {
 
 route.get("/:id", (req, resp) => {
   const { id } = req.params;
-  const sql = "SELECT * FROM events WHERE id = ?";
+  console.log(id)
+  const sql = "SELECT * FROM events WHERE Id = ?";
 
   connection.query(sql, [id], (err, resultado) => {
     if (err) {

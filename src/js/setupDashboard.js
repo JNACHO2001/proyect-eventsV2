@@ -72,7 +72,8 @@ async function handleEventActions(e) {
     if (target.classList.contains("edit-btn")) {
       const id = target.dataset.id;
       const evento = await getOneEvents(id)
-      setupForm(evento)
+     setupForm(evento)
+       
       
     }
 
