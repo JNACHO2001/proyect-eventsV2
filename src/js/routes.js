@@ -32,7 +32,7 @@ export async function renderRoute() {
     app.innerHTML = content;
 
     if (route.setup) {
-      route.setup();
+      route.setup(content);
     }
   } catch (error) {
     console.log("no encontre la ruta ", error);
