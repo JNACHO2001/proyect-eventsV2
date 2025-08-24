@@ -2,6 +2,7 @@ import Swal from "sweetalert2";
 import { configData } from "../../public/sweetAlert2/config";
 import { getEvents, getOneEvents } from "../config/configApisEvents";
 import { redirecto } from "./routes";
+import { getUser } from "../config/guardian";
 
 export function setupDashboardVisit() {
   setupOutButton();
@@ -70,6 +71,8 @@ async function handleEventActions(e) {
       const id = target.dataset.id;
       const evento = await getOneEvents(id);
       console.log(evento.Id);
+      const user = getUser()
+      console.log(user.id)
     }
   } catch (error) {
     console.error("Hay un nuevo error", error);
