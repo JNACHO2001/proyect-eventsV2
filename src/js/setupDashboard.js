@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { configData } from "../../public/sweetAlert2/config";
 import { setupForm } from "../../public/sweetAlert2/setupForm";
 import { deleteEvents, getEvents } from "../config/configApisEvents";
@@ -65,16 +66,27 @@ function renderEventsRow(events) {
 }
 
 async function handleEventActions(e) {
-  const target = e.target;
+  try {
+    const target = e.target;
 
-  if (target.classList.contains("edit-btn")) {
-    const id = target.dataset.id;
-  }
+    if (target.classList.contains("edit-btn")) {
+      const id = target.dataset.id;
+    }
 
-  if (target.classList.contains("delete-btn")) {
-    const id = target.dataset.id;
-    await deleteEvents(id);
-    loadEventsView();
+    if (target.classList.contains("delete-btn")) {
+      const id = target.dataset.id;
+      const respuesta = await deleteEvents(id);
+      Swal.fire({
+        title: "¡Eliminado!",
+        text: respuesta.message,
+        icon: "success",
+        confirmButtonText: "Aceptar",
+      });
+
+      loadEventsView();
+    }
+  } catch (error) {
+    console.error("Hay un nuevo error", error);
   }
 }
 

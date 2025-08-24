@@ -37,9 +37,9 @@ export async function deleteEvents(Id) {
       throw new Error("Error al eliminar el evento");
     }
 
-    const data = resp.json();
-    alert(data)
-    console.log(data)
+    const data = await resp.json();
+    return data 
+    
   } catch (error) {
     console.error("Error al eliminar  evento:", error);
     throw error;
