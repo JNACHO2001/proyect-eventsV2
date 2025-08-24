@@ -1,5 +1,4 @@
 import { loginUser } from "../config/configApis";
-import { getUser } from "../config/guardian";
 import { redirecto } from "./routes";
 
 export function setupLogin() {

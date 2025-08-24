@@ -1,8 +1,7 @@
-import Swal from "sweetalert2";
 import { configData } from "../../public/sweetAlert2/config";
 import { getEvents, getOneEvents } from "../config/configApisEvents";
 import { redirecto } from "./routes";
-import { getUser } from "../config/guardian";
+
 
 export function setupDashboardVisit() {
   setupOutButton();

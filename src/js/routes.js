@@ -1,4 +1,4 @@
-import { isAdmin, isAuthenticated } from "../config/guardian";
+import { getUser, guard } from "../config/guardian";
 import { setupDashboard } from "./setupDashboard";
 import { setupDashboardVisit } from "./setupDashboardVisit";
 import { setupLogin } from "./setupLogin";
@@ -16,12 +16,10 @@ const routes = {
   "/dashboard": {
     path: "/src/view/dashboard.html",
     setup: setupDashboard,
-    guard: isAdmin,
   },
   "/dashboardVisit": {
     path: "/src/view/dashboardVisit.html",
     setup: setupDashboardVisit,
-    guard: isAuthenticated,
   },
 
   "/notfound": {
@@ -34,12 +32,15 @@ export async function renderRoute() {
   const path = window.location.pathname;
   const route = routes[path] || routes["/notfound"];
 
-  if (route.guard && !route.guard()) {
-    console.warn("Acceso denegado");
-    if (path === "/dashboard" && isAuthenticated()) {
-      return redirecto("/dashboardVisit");
+  if (!guard(path)) {
+    const user = getUser();
+    if (!user) {
+      return redirecto("/");
     }
-    return redirecto("/");
+    if (user.role === 1) {
+      return redirecto("/dashboard");
+    }
+    return redirecto("/dashboardVisit");
   }
 
   try {
