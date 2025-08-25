@@ -20,13 +20,12 @@ export function setupLogin() {
       const data = await loginUser(credentials);
       localStorage.setItem("current", JSON.stringify(data.user));
       const user = data.user;
-      console.log("Usuario logueado:", user);
       if (user.role === 1) {
-        redirecto("/dashboard"); // ruta exclusiva para admin
+        redirecto("/dashboard");
       } else if (user.role === 2) {
-        redirecto("/dashboardVisit"); // ruta para barbero
+        redirecto("/dashboardVisit");
       } else {
-        redirecto("/notfound"); // ruta normal cliente
+        redirecto("/notfound");
       }
     } catch (error) {
       alert(error.message);
