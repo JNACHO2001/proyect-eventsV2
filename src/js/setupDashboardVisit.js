@@ -3,23 +3,12 @@ import { getEvents, getOneEvents } from "../config/configApisEvents";
 import { getUser } from "../config/guardian";
 import { redirecto } from "./routes";
 
-
 export function setupDashboardVisit() {
   setupOutButton();
   infoUserSlide();
   loadEventsView();
-  setupTabsDashboard()
- 
-
-
-
-
+  setupTabsDashboard();
 }
- 
-
-
-
-  
 
 function infoUserSlide() {
   const contentUserInfo = document.querySelector(".user-info");
@@ -81,33 +70,33 @@ async function handleEventActions(e) {
       const id = target.dataset.id;
       const evento = await getOneEvents(id);
       console.log(evento.Id);
-      const user = getUser()
-      console.log(user.id)
+      const user = getUser();
+      console.log(user.id);
     }
   } catch (error) {
     console.error("Hay un nuevo error", error);
   }
 }
 function setupTabsDashboard() {
-  const tabs = document.querySelectorAll('.tab');
-  const eventsSection = document.querySelector('.events-grid');
-  const participationsSection = document.querySelector('#participations');
+  const tabs = document.querySelectorAll(".tab");
+  const eventsSection = document.querySelector(".events-grid");
+  const participationsSection = document.querySelector("#participations");
 
   // Por defecto solo mostramos eventos
-  eventsSection.style.display = 'block';
-  participationsSection.style.display = 'none';
+  eventsSection.style.display = "block";
+  participationsSection.style.display = "none";
 
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      tabs.forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
+  tabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabs.forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
 
-      if (tab.dataset.tab === 'events') {
-        eventsSection.style.display = 'block';
-        participationsSection.style.display = 'none';
+      if (tab.dataset.tab === "events") {
+        eventsSection.style.display = "block";
+        participationsSection.style.display = "none";
       } else {
-        eventsSection.style.display = 'none';
-        participationsSection.style.display = 'block';
+        eventsSection.style.display = "none";
+        participationsSection.style.display = "block";
       }
     });
   });
