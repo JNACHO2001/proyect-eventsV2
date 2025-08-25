@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import usersRoute from"./user.route.js"
 import EventsRoute from "./events.route.js"
+import participation from "./participaciones.route.js"
 
 const app = express()
 app.use(cors())
@@ -9,6 +10,7 @@ app.use(express.json())
 
 app.use("/api/users", usersRoute);
 app.use("/api/events", EventsRoute);
+app.use("/api/participaciones",participation)
 app.get("/", (req, res) => {
   res.json({ message: "Servidor preparado" });
 });
