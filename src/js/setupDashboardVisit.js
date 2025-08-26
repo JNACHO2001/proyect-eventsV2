@@ -1,8 +1,5 @@
 import { configData } from "../../public/sweetAlert2/config";
-import {
-  getParcipations,
-  postParticipations,
-} from "../config/configApiParticipation";
+import {getParcipations,registrarParticipacion} from "../config/configApiParticipation";
 import { getEvents, getOneEvents } from "../config/configApisEvents";
 import { getUser } from "../config/guardian";
 import { redirecto } from "./routes";
@@ -73,20 +70,24 @@ async function handleEventActions(e) {
 
     if (target.classList.contains("edit-btn")) {
       const id = target.dataset.id;
+
+      // Obtener el evento y el usuario
       const eventos = await getOneEvents(id);
-      const evento=eventos.Id
+      const evento = eventos.Id;
       const user = getUser().id;
-      const resp = await postParticipations(user, evento);
+
+      const resp = await registrarParticipacion(user, evento);
+
       if (!resp.ok) {
-         Swal.fire({
-        title: "Error",
-        text: resp.message,
-        icon: "error",
-        confirmButtonText: "Aceptar",
-      });
-      return;
-       
+        Swal.fire({
+          title: "Error",
+          text: resp.message,
+          icon: "error",
+          confirmButtonText: "Aceptar",
+        });
+        return;
       }
+
       Swal.fire({
         title: "¡Agregado!",
         text: resp.message,
@@ -97,20 +98,20 @@ async function handleEventActions(e) {
   } catch (error) {
     console.error("Hay un nuevo error", error);
     Swal.fire({
-    title: "Error inesperado",
-    text: error.message,
-    icon: "error",
-    confirmButtonText: "Aceptar",
-  });
+      title: "Error inesperado",
+      text: error.message,
+      icon: "error",
+      confirmButtonText: "Aceptar",
+    });
   }
 }
+
 async function setupTabsDashboard() {
   const data = await getParcipations();
   const tabs = document.querySelectorAll(".tab");
   const eventsSection = document.querySelector(".events-grid");
   const participationsSection = document.querySelector("#participations");
 
-  // Por defecto solo mostramos eventos
   eventsSection.style.display = "block";
   participationsSection.style.display = "none";
 

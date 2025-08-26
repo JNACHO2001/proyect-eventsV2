@@ -4,21 +4,18 @@ export async function getParcipations() {
   return resp.json();
 }
 
-export async function postParticipations(id_user, id_event) {
+export async function registrarParticipacion(id_user, id_event) {
   try {
-    const resp = await fetch(`${API_URL}`, {
+    const resp = await fetch("http://localhost:3000/api/participaciones", {
       method: "POST",
-      headers: { "Content-type": "application/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id_user, id_event }),
     });
 
-    if (!resp.ok) {
-      throw new Error("errar a gregar participacion", Error);
-    }
-    const data = resp.json();
+    const data = await resp.json();
     return data;
   } catch (error) {
-    console.error("Error al crear participacion:", error);
-    throw error;
+    console.error("Error en registrar la Participacion:", error);
+    return { ok: false, message: "Error de conexión con el servidor" };
   }
 }
