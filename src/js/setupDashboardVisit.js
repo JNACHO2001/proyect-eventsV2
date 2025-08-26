@@ -1,8 +1,12 @@
 import { configData } from "../../public/sweetAlert2/config";
-import { getParcipations } from "../config/configApiParticipation";
+import {
+  getParcipations,
+  postParticipations,
+} from "../config/configApiParticipation";
 import { getEvents, getOneEvents } from "../config/configApisEvents";
 import { getUser } from "../config/guardian";
 import { redirecto } from "./routes";
+import Swal from "sweetalert2";
 
 export function setupDashboardVisit() {
   setupOutButton();
@@ -69,13 +73,35 @@ async function handleEventActions(e) {
 
     if (target.classList.contains("edit-btn")) {
       const id = target.dataset.id;
-      const evento = await getOneEvents(id);
-      console.log(evento.Id);
-      const user = getUser();
-      console.log(user.id);
+      const eventos = await getOneEvents(id);
+      const evento=eventos.Id
+      const user = getUser().id;
+      const resp = await postParticipations(user, evento);
+      if (!resp.ok) {
+         Swal.fire({
+        title: "Error",
+        text: resp.message,
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+      return;
+       
+      }
+      Swal.fire({
+        title: "¡Agregado!",
+        text: resp.message,
+        icon: "success",
+        confirmButtonText: "Aceptar",
+      });
     }
   } catch (error) {
     console.error("Hay un nuevo error", error);
+    Swal.fire({
+    title: "Error inesperado",
+    text: error.message,
+    icon: "error",
+    confirmButtonText: "Aceptar",
+  });
   }
 }
 async function setupTabsDashboard() {
