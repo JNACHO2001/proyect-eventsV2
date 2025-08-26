@@ -1,4 +1,5 @@
 import { configData } from "../../public/sweetAlert2/config";
+import { getParcipations } from "../config/configApiParticipation";
 import { getEvents, getOneEvents } from "../config/configApisEvents";
 import { getUser } from "../config/guardian";
 import { redirecto } from "./routes";
@@ -77,7 +78,8 @@ async function handleEventActions(e) {
     console.error("Hay un nuevo error", error);
   }
 }
-function setupTabsDashboard() {
+async function setupTabsDashboard() {
+  const data = await getParcipations();
   const tabs = document.querySelectorAll(".tab");
   const eventsSection = document.querySelector(".events-grid");
   const participationsSection = document.querySelector("#participations");
@@ -100,4 +102,17 @@ function setupTabsDashboard() {
       }
     });
   });
+}
+
+function renderParticipations(data) {
+  return `  
+   <div class="participations-list">
+                    <div class="participation-card">
+                        <div class="participation-info">
+                            <h3></h3>
+                            <div class="participation-date">10 de Marzo, 2024</div>
+                        </div>
+                        <div class="participation-status status-confirmed">Confirmado</div>
+                    </div>
+                </div> `;
 }
