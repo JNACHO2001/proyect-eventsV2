@@ -4,8 +4,7 @@ import connection from "../sql/connection.js";
 
 const route = express.Router();
 
-
-route.get("/", (req, resp) => {
+route.get("/", (_req, resp) => {
   const sql = "select *from events";
 
   connection.query(sql, (err, resultado) => {
@@ -13,6 +12,20 @@ route.get("/", (req, resp) => {
       return resp.status(500).json({ message: "no traje nada " });
     }
     resp.json(resultado);
+  });
+});
+
+route.get("/numbers", (_req, resp) => {
+  const sql = "select  count(*)  as eventos from events;";
+
+  connection.query(sql, (err, resultado) => {
+    if (err) {
+      return resp
+        .status(400)
+        .json({ ok: false, message: "No pudo contar los eventos  " });
+    }
+
+    resp.json(resultado)
   });
 });
 
@@ -29,16 +42,15 @@ route.get("/:id", (req, resp) => {
       return resp.status(404).json({ message: "Evento no encontrado" });
     }
 
-    resp.json(resultado[0]); 
+    resp.json(resultado[0]);
   });
 });
-
 
 route.post("/", (req, resp) => {
   const sql =
     "insert into events(titulo,descripcion,fecha,capacidad)  values(?,?,?,?) ";
   const { titulo, descripcion, fecha, capacidad } = req.body;
-     console.log("Datos recibidos:", req.body);
+  console.log("Datos recibidos:", req.body);
 
   connection.query(
     sql,
@@ -59,7 +71,6 @@ route.put("/:Id", (req, resp) => {
     "update events  set titulo = ?,descripcion =?,fecha=?,capacidad=?  where  Id=? ";
   const { Id } = req.params;
   const { titulo, descripcion, fecha, capacidad } = req.body;
-
 
   connection.query(
     sql,

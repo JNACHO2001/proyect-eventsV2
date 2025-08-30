@@ -3,7 +3,7 @@ import connection from "../sql/connection.js";
 
 const route = exprees.Router();
 
-route.get("/", (req, resp) => {
+route.get("/", (_req, resp) => {
   const sql = "select  * from participaciones";
   connection.query(sql, (err, resultado) => {
     if (err) {
