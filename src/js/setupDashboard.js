@@ -1,7 +1,12 @@
 import Swal from "sweetalert2";
 import { configData } from "../../public/sweetAlert2/config";
 import { setupForm } from "../../public/sweetAlert2/setupForm";
-import { deleteEvents, getEvents, getOneEvents } from "../config/configApisEvents";
+import {
+  deleteEvents,
+  getEvents,
+  getEventsNumbers,
+  getOneEvents,
+} from "../config/configApisEvents";
 import { redirecto } from "./routes";
 
 export function setupDashboard() {
@@ -11,7 +16,7 @@ export function setupDashboard() {
   loadEventsView();
 }
 
-function infoUserSlide() {
+async function infoUserSlide() {
   const contentUserInfo = document.querySelector(".user-info");
   const user = JSON.parse(localStorage.getItem("current"));
   const firsLetter = user.fullname[0].toUpperCase();
@@ -31,10 +36,15 @@ function setupOutButton() {
 }
 
 export async function loadEventsView() {
+  const spanNumber = document.querySelector(".stat-value");
+
   const contentEvets = document.querySelector(".events-grid");
   try {
     const data = await getEvents();
+    const { total } = await getEventsNumbers();
     contentEvets.innerHTML = "";
+
+    spanNumber.innerHTML = total;
     if (!data || data.length === 0) {
       contentEvets.innerHTML = `<h3>No hay ningún registro</h3>`;
       return;
@@ -71,10 +81,8 @@ async function handleEventActions(e) {
 
     if (target.classList.contains("edit-btn")) {
       const id = target.dataset.id;
-      const evento = await getOneEvents(id)
-     setupForm(evento)
-       
-      
+      const evento = await getOneEvents(id);
+      setupForm(evento);
     }
 
     if (target.classList.contains("delete-btn")) {

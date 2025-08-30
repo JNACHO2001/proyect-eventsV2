@@ -20,7 +20,6 @@ export function setupDashboardVisit() {
 }
 
 async function infoUserSlide() {
-  const spanNumber = document.querySelector(".stat-value");
   const contentUserInfo = document.querySelector(".user-info");
   const user = JSON.parse(localStorage.getItem("current"));
   const firsLetter = user.fullname[0].toUpperCase();
@@ -28,9 +27,6 @@ async function infoUserSlide() {
   contentUserInfo.innerHTML = `<p class="user-avatar">${firsLetter}</p>
         <h2 class="user-name">${user.fullname}</h2>
         <p class="user-email">${user.email}</p>  `;
-  const { total } = await getEventsNumbers();
-
-  spanNumber.innerHTML = total;
 }
 
 function setupOutButton() {
@@ -43,10 +39,15 @@ function setupOutButton() {
 }
 
 export async function loadEventsView() {
+  const spanNumber = document.querySelector(".stat-value");
+
   const contentEvets = document.querySelector(".events-grid");
   try {
     const data = await getEvents();
+    const { total } = await getEventsNumbers();
+
     contentEvets.innerHTML = "";
+    spanNumber.innerHTML = total;
     if (!data || data.length === 0) {
       contentEvets.innerHTML = `<h3>No hay ningún registro</h3>`;
       return;
