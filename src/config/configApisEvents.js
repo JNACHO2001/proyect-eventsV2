@@ -65,3 +65,20 @@ export async function deleteEvents(Id) {
     throw error;
   }
 }
+
+export async function getEventsNumbers() {
+  try {
+    const resp = await fetch(`${API_URL}/numbers`);
+
+    if (!resp.ok) {
+      throw new Error("Error al obtener número de eventos");
+    }
+
+    // Aquí parseamos directamente el JSON que devuelve la API
+    const data = await resp.json();
+    return data;
+  } catch (error) {
+    console.error("Error al obtener número de eventos:", error);
+    throw error;
+  }
+}

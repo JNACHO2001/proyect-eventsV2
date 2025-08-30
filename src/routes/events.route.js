@@ -16,18 +16,27 @@ route.get("/", (_req, resp) => {
 });
 
 route.get("/numbers", (_req, resp) => {
-  const sql = "select  count(*)  as eventos from events;";
+  const sql = "SELECT COUNT(*) AS eventos FROM events;";
 
   connection.query(sql, (err, resultado) => {
     if (err) {
-      return resp
-        .status(400)
-        .json({ ok: false, message: "No pudo contar los eventos  " });
+      return resp.status(500).json({
+        ok: false,
+        message: "No se pudo contar los eventos",
+        error: err.message
+      });
     }
 
-    resp.json(resultado)
+    // MySQL devuelve un array, así que extraemos el primer objeto
+    const totalEventos = resultado[0].eventos;
+
+    resp.json({
+      ok: true,
+      total: totalEventos
+    });
   });
 });
+
 
 route.get("/:id", (req, resp) => {
   const { id } = req.params;
