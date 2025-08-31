@@ -96,4 +96,18 @@ route.get("/:Id", (req, resp) => {
   });
 });
 
+route.delete("/:Id", (req, resp) => {
+  const sql = "delete from participaciones where Id = ?";
+  const { Id } = req.params;
+  connection.query(sql, [Id], (err, resultado) => {
+    if (err) {
+      return resp.status(500).json({ message: "no se pudo eliminar " });
+    }
+    if (resultado.length === 0) {
+      return resp.status(404).json({ message: "no encontre la participacion" });
+    }
+    resp.json({ message: "Te has salido de la participacion" });
+  });
+});
+
 export default route;

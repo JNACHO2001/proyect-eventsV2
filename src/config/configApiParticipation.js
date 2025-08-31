@@ -34,3 +34,20 @@ export async function getUserParticipation(userId) {
     throw error;
   }
 }
+
+export async function deleteParticipations(idparticipation) {
+  try {
+    const resp = await fetch(`${API_URL}/${idparticipation}`, {
+      method: "DELETE",
+    });
+
+    if (!resp.ok) {
+      throw new Error("No se pudo eliminar");
+    }
+
+    const data = await resp.json();
+    return data;
+  } catch (error) {
+    console.log("se presento un problema", error);
+  }
+}
