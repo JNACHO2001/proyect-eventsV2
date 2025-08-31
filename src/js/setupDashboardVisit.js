@@ -1,6 +1,6 @@
 import { configData } from "../../public/sweetAlert2/config";
 import {
-  getParcipations,
+  deleteParticipations,
   getUserParticipation,
   registrarParticipacion,
 } from "../config/configApiParticipation";
@@ -83,31 +83,59 @@ async function handleEventActions(e) {
     const target = e.target;
 
     if (target.classList.contains("edit-btn")) {
-      const id = target.dataset.id;
-
-      // Obtener el evento y el usuario
-      const eventos = await getOneEvents(id);
-      const evento = eventos.Id;
+      const id = target.dataset.id; // id del evento
+      const evento = (await getOneEvents(id)).Id;
       const user = getUser().id;
 
-      const resp = await registrarParticipacion(user, evento);
+      if (target.textContent === "Ingresar") {
+        // Registrar participación
+        const resp = await registrarParticipacion(user, evento);
 
-      if (!resp.ok) {
+        if (!resp.ok) {
+          return Swal.fire({
+            title: "Error",
+            text: resp.message,
+            icon: "error",
+            confirmButtonText: "Aceptar",
+          });
+        }
+
+        target.dataset.participationId = resp.id_participacion;
+
         Swal.fire({
-          title: "Error",
+          title: "¡Agregado!",
           text: resp.message,
-          icon: "error",
+          icon: "success",
           confirmButtonText: "Aceptar",
         });
-        return;
-      }
+          target.textContent = "Salir";
+        target.style.backgroundColor = "red";
 
-      Swal.fire({
-        title: "¡Agregado!",
-        text: resp.message,
-        icon: "success",
-        confirmButtonText: "Aceptar",
-      });
+        console.log(target.dataset.participationId);
+      } else {
+        const participationId = target.dataset.participationId;
+
+        const resp = await deleteParticipations(participationId);
+
+        if (resp.ok) {
+          return Swal.fire({
+            title: "Error",
+            text: resp.message,
+            icon: "error",
+            confirmButtonText: "Aceptar",
+          });
+        }
+
+        Swal.fire({
+          title: "¡Eliminado!",
+          text: resp.message,
+          icon: "success",
+          confirmButtonText: "Aceptar",
+        });
+
+        target.textContent = "Ingresar";
+        target.style.backgroundColor = "#0ab118";
+      }
     }
   } catch (error) {
     console.error("Hay un nuevo error", error);
@@ -119,6 +147,7 @@ async function handleEventActions(e) {
     });
   }
 }
+
 async function loadParicipationEvent() {
   const contentparticipation = document.getElementById("participations");
   const userId = JSON.parse(localStorage.getItem("current")).id;
@@ -128,7 +157,7 @@ async function loadParicipationEvent() {
   const data = datas.participaciones;
 
   data.forEach((participation) => {
-    contentparticipation.innerHTML = renderParticipations(participation);
+    contentparticipation.innerHTML += renderParticipations(participation);
   });
 }
 async function setupTabsDashboard() {

@@ -12,7 +12,9 @@ route.get("/", (_req, resp) => {
         .json({ message: "no se encontraron participaciones " });
     }
 
-    resp.json(resultado);
+    resp.json({
+      participaciones: resultado,
+    });
   });
 });
 

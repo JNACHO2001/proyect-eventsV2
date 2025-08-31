@@ -1,7 +1,8 @@
 const API_URL = "http://localhost:3000/api/participaciones";
 export async function getParcipations() {
   const resp = await fetch(API_URL);
-  return resp.json();
+  const data = resp.json();
+  return data;
 }
 
 export async function registrarParticipacion(id_user, id_event) {
@@ -30,14 +31,14 @@ export async function getUserParticipation(userId) {
     const data = await resp.json();
     return data;
   } catch (error) {
-    console.error("Error en getUserParticipations:", error);
+    console.error("Error en buscar las participaciones ", error);
     throw error;
   }
 }
 
-export async function deleteParticipations(idparticipation) {
+export async function deleteParticipations(idParticipation) {
   try {
-    const resp = await fetch(`${API_URL}/${idparticipation}`, {
+    const resp = await fetch(`${API_URL}/${idParticipation}`, {
       method: "DELETE",
     });
 
