@@ -161,7 +161,9 @@ function renderParticipations(participation) {
                     <div class="participation-card">
                         <div class="participation-info">
                             <h3>${participation.titulo}</h3>
-                            <div class="participation-date">${participation.fecha}</div>
+                            <div class="participation-date">${configData(
+                              participation.fecha
+                            )}</div>
                         </div>
                         <div class="participation-status status-confirmed">Confirmado</div>
                     </div>
