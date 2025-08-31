@@ -83,8 +83,7 @@ async function handleEventActions(e) {
     const target = e.target;
 
     if (target.classList.contains("edit-btn")) {
-      const id = target.dataset.id; // id del evento
-      const evento = (await getOneEvents(id)).Id;
+      const evento = target.dataset.id;
       const user = getUser().id;
 
       if (target.textContent === "Ingresar") {
@@ -117,7 +116,7 @@ async function handleEventActions(e) {
 
         const resp = await deleteParticipations(participationId);
 
-        if (resp.ok) {
+        if (!resp.ok) {
           return Swal.fire({
             title: "Error",
             text: resp.message,
@@ -155,7 +154,7 @@ async function loadParicipationEvent() {
   const datas = await getUserParticipation(userId);
 
   const data = datas.participaciones;
-
+contentparticipation.innerHTML="";
   data.forEach((participation) => {
     contentparticipation.innerHTML += renderParticipations(participation);
   });
