@@ -15,6 +15,8 @@ route.get("/", (_req, resp) => {
   });
 });
 
+/*este endopin es para ver cuantos eventos hay creados en numeros  */
+
 route.get("/numbers", (_req, resp) => {
   const sql = "SELECT COUNT(*) AS eventos FROM events;";
 

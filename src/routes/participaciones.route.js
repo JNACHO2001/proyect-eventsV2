@@ -16,6 +16,9 @@ route.get("/", (_req, resp) => {
   });
 });
 
+
+
+
 route.post("/", (req, res) => {
   const { id_user, id_event } = req.body;
 
@@ -55,22 +58,41 @@ route.post("/", (req, res) => {
   });
 });
 
-route.post("/:Id", (req, resp) => {
+
+/*endpoint para buscar las participaciones por usuario  */
+route.get("/:Id", (req, resp) => {
   const { Id } = req.params;
-  const sql = `SELECT participaciones.Id,events.titulo,events.fecha
-FROM users
-JOIN participaciones
-ON users.Id = participaciones.id_user
-join events
-on events.Id=participaciones.id_event where users.Id=? ;`;
+
+  const sql = `
+    SELECT p.Id, e.titulo, e.fecha
+    FROM participaciones p
+    JOIN users u ON u.Id = p.id_user
+    JOIN events e ON e.Id = p.id_event
+    WHERE u.Id = ?;
+  `;
+
   connection.query(sql, [Id], (err, resultado) => {
     if (err) {
-      return resp
-        .status(500)
-        .json({ message: "no se encontro la participacion " });
+      return resp.status(500).json({
+        ok: false,
+        message: "Error al obtener las participaciones",
+        error: err.message,
+      });
     }
 
-    resp.json(resultado);
+    // si no hay participaciones
+    if (resultado.length === 0) {
+      return resp.status(404).json({
+        ok: false,
+        message: "No se encontraron participaciones para este usuario",
+      });
+    }
+
+    resp.json({
+      ok: true,
+      total: resultado.length,
+      participaciones: resultado,
+    });
   });
 });
 

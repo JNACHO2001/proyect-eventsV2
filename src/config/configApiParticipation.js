@@ -19,3 +19,18 @@ export async function registrarParticipacion(id_user, id_event) {
     return { ok: false, message: "Error de conexión con el servidor" };
   }
 }
+
+export async function getUserParticipation(userId) {
+  try {
+    const resp = await fetch(`${API_URL}/${userId}`);
+    if (!resp.ok) {
+      throw new Error("Error al buscar paricipaciones ");
+    }
+
+    const data = await resp.json();
+    return data;
+  } catch (error) {
+    console.error("Error en getUserParticipations:", error);
+    throw error;
+  }
+}

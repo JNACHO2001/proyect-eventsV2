@@ -1,6 +1,7 @@
 import { configData } from "../../public/sweetAlert2/config";
 import {
   getParcipations,
+  getUserParticipation,
   registrarParticipacion,
 } from "../config/configApiParticipation";
 import {
@@ -17,6 +18,7 @@ export function setupDashboardVisit() {
   infoUserSlide();
   loadEventsView();
   setupTabsDashboard();
+  loadParicipationEvent();
 }
 
 async function infoUserSlide() {
@@ -117,9 +119,19 @@ async function handleEventActions(e) {
     });
   }
 }
+async function loadParicipationEvent() {
+  const contentparticipation = document.getElementById("participations");
+  const userId = JSON.parse(localStorage.getItem("current")).id;
 
+  const datas = await getUserParticipation(userId);
+
+  const data = datas.participaciones;
+
+  data.forEach((participation) => {
+    contentparticipation.innerHTML = renderParticipations(participation);
+  });
+}
 async function setupTabsDashboard() {
-  const data = await getParcipations();
   const tabs = document.querySelectorAll(".tab");
   const eventsSection = document.querySelector(".events-grid");
   const participationsSection = document.querySelector("#participations");
@@ -143,13 +155,13 @@ async function setupTabsDashboard() {
   });
 }
 
-function renderParticipations(data) {
+function renderParticipations(participation) {
   return `  
    <div class="participations-list">
                     <div class="participation-card">
                         <div class="participation-info">
-                            <h3></h3>
-                            <div class="participation-date">10 de Marzo, 2024</div>
+                            <h3>${participation.titulo}</h3>
+                            <div class="participation-date">${participation.fecha}</div>
                         </div>
                         <div class="participation-status status-confirmed">Confirmado</div>
                     </div>
