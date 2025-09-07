@@ -3,13 +3,13 @@ import {
   deleteParticipations,
   getUserParticipation,
   registrarParticipacion,
-} from "../config/configApiParticipation";
+} from "../../../backend/config/configApiParticipation";
 import {
   getEvents,
   getEventsNumbers,
   getOneEvents,
-} from "../config/configApisEvents";
-import { getUser } from "../config/guardian";
+} from "../../../backend/config/configApisEvents"
+import { getUser } from "../../../backend/config/guardian";
 import { redirecto } from "./routes";
 import Swal from "sweetalert2";
 

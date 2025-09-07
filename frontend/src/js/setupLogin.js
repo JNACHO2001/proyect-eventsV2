@@ -1,4 +1,4 @@
-import { loginUser } from "../config/configApis";
+import { loginUser } from "../../../backend/config/configApis";
 import { redirecto } from "./routes";
 
 export function setupLogin() {

@@ -1,7 +1,7 @@
 import mysql from "mysql2";
 import dotenv from "dotenv";
 import path from "path";
-dotenv.config({ path: path.resolve("../../.env") });
+dotenv.config({ path: path.resolve("../.env") });
 
 const connection = mysql.createPool({
   host: process.env.DB_HOST,

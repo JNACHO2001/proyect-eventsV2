@@ -1,4 +1,4 @@
-import { getUser, guard } from "../config/guardian";
+import { getUser, guard } from "../../../backend/config/guardian";
 import { setupDashboard } from "./setupDashboard";
 import { setupDashboardVisit } from "./setupDashboardVisit";
 import { setupLogin } from "./setupLogin";

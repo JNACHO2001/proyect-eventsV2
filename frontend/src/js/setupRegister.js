@@ -1,4 +1,4 @@
-import { registerUser } from "../config/configApis";
+import { registerUser } from "../../../backend/config/configApis";
 import { redirecto } from "./routes";
 
 export function setupRegister() {

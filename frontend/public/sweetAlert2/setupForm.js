@@ -1,4 +1,4 @@
-import { createEvent, putEvents } from "../../src/config/configApisEvents";
+import { createEvent, putEvents } from "../../../backend/config/configApisEvents";
 import Swal from "sweetalert2";
 import { loadEventsView } from "../../src/js/setupDashboard";
 export async function setupForm(eventToEdit = null) {

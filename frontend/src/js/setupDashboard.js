@@ -6,7 +6,7 @@ import {
   getEvents,
   getEventsNumbers,
   getOneEvents,
-} from "../config/configApisEvents";
+} from "../../../backend/config/configApisEvents";
 import { redirecto } from "./routes";
 
 export function setupDashboard() {
