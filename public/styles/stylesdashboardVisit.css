@@ -225,6 +225,8 @@
 /* Contenido de Tabs */
 .tab-content {
   display: none;
+  gap: 200px;
+  margin: 0;
 }
 
 .tab-content.active {
@@ -234,7 +236,7 @@
 .participations-list {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+ 
 }
 
 .participation-card {
@@ -245,6 +247,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
+  
 }
 
 .participation-info h3 {

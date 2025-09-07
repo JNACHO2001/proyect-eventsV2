@@ -18,7 +18,7 @@ export function setupDashboardVisit() {
   infoUserSlide();
   loadEventsView();
   setupTabsDashboard();
-  loadParicipationEvent();
+  
 }
 
 async function infoUserSlide() {
@@ -158,6 +158,12 @@ contentparticipation.innerHTML="";
   data.forEach((participation) => {
     contentparticipation.innerHTML += renderParticipations(participation);
   });
+
+  if (data.length===0) {
+    contentparticipation.innerHTML="<p>no hay participaciones</p>"
+    console.log("no hay ");
+    
+  }
 }
 async function setupTabsDashboard() {
   const tabs = document.querySelectorAll(".tab");
@@ -178,6 +184,7 @@ async function setupTabsDashboard() {
       } else {
         eventsSection.style.display = "none";
         participationsSection.style.display = "block";
+        loadParicipationEvent()
       }
     });
   });
